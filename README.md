@@ -1,24 +1,31 @@
-# The Red Guild's devcontainer exploration
+# Giovanni Di Siena's Dev Container
+Forked from The Red Guild's [Where do you run your code? - an intro to devcontainers](https://blog.theredguild.org/where-do-you-run-your-code/).
+
 ## Requirements
-1. Visual Studio Code.
+Must have `docker` and `docker-buildx` installed on local OS.
+
+### Visual Studio Code
 1. DevContainer extension by MS: `ms-vscode-remote.remote-containers`.
-1. Must have installed on your local OS: `docker` and `docker-buildx`.
+
+### VSCodium
+1. [DevPod Containers extension](https://open-vsx.org/extension/3timeslazy/vscodium-devpodcontainers).
+2. [DevPod CLI](https://devpod.sh/docs/getting-started/install#optional-install-devpod-cli).
 
 ## Kick-off
-1. Start the docker service, and make sure your user is in the `docker` group.
-   Otherwise, log in back again.
-1. Clone this repo and open the folder with vscode how you like. Running
- `code .` works well.
-1. Select _"Reopen in Container"_ and wait. This will build the container volume.
-1. If this is your first time, you'll be prompted to press enter on a console
+1. Start the docker service, and make sure your user is in the `docker` group;
+   otherwise, log back in again.
+2. Clone this repo and open the folder with vscode/vscodium:
+   `code .` or `codium .`.
+3. Select _"Reopen in Container"_ and wait. This will build the container volume.
+4. If this is your first time, you'll be prompted to press enter on a console
    log that triggers the terminal.
-1. If not you can go to the extensions section on your side, click the Remote
-    Explorer tab and select the active devcontainer.
+5. If not you can go to the extensions section on your side, click the Remote
+   Explorer tab and select the active devcontainer.
 
 ## Usage
-If you open the Command Palette (Ctrl+Shift+p or whatever your shortcut is) you
+If you open the Command Palette (`Ctrl+Shift+P` or whatever your shortcut is) you
  can access several features:
-- You can attach VS Code to a running container, where you can open any folder
+- You can attach VS Code/Codium to a running container, where you can open any folder
  or Clone a repository.
 - You can open new folders or workspaces of your liking inside the current 
 volume.
@@ -27,15 +34,18 @@ volume.
 
 ## What's in it?
 - frameworks: foundry, hardhat (manual install)
-- utilities: solc-select
-- fuzzing: slither, medusa
+- utilities: brew, crytic-compile, solc-select
+- fuzzing: echidna, medusa
+- static analysis: aderyn, slither
 - others: node, npm, pnpm, yarn, python, go
-- terminal: zsh with Oh-My-ZSH
+- terminal: zsh with oh-my-zsh
 - extensions:
+   - `GitHub.copilot`,
    - `NomicFoundation.hardhat-solidity`,
-   - `tintinweb.solidity-visual-auditor`,
-   - `trailofbits.weaudit`,
-   - `tintinweb.solidity-metrics`
+   - `tintinweb.vscode-inline-bookmarks`,
+   - `tintinweb.vscode-solidity-language`,
+   - `tintinweb.vscode-circom-pro`,
+   - `rust-lang.rust-analyzer`
 
 ## Useful resources
 ### Install different node versions with nvm
@@ -60,7 +70,3 @@ If you wish to install hardhat globally, you can run:
 The other reason it does not come by default, it's because the nvm
 installation is not trivial at all, and working with its peculiarities
 inside a Dockerfile to install packages is not worth the mess.
-
-### Links
-- Article (references this repo's branch article): [Where do you run your code?](https://blog.theredguild.org/where-do-you-run-your-code/)
-- Workshop: [Come and build your own devContainer!](https://eth-security-explorations.notion.site/Come-and-build-your-own-devContainer-13b3c0d74d7f448f836419281d916369) @ the-mu
