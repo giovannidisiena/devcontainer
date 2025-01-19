@@ -14,9 +14,9 @@
   },
 
   // Mount isolation. If you need to extract something from within the container, you can use docker cp, but use it at your own risk. Changes inside the live container won't persist.
-  // Disables mounting the host workspace into the container.
+  // Disables mounting the host workspace into the container (when running Reopen in container from the command palette) and sets a workspace path entirely isolated within the container.
+  // Comment out the following two lines if you need to mount the workspace into the container (e.g. an existing repo on your host machine).
   "workspaceMount": "source=none,target=/workspace,type=volume",
-  // Sets a workspace path entirely isolated within the container
   "workspaceFolder": "/home/vscode/workspace",
   "runArgs": [
     // Read only filesystem except for explicitly writable volumes (check mounts)
