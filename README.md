@@ -46,7 +46,7 @@ cd $_
    - Attaching VS Code/Codium to a running container.
    - Opening new folders or workspaces inside the current volume.
    - Cloning a new repository in a new volume based on the same devcontainer.
-7. To mount an existing directory, execute `docker run -it -v /path/to/project:/home/vscode/workspace/audit devcontainer`.
+7. To mount an existing directory, copy the contents of this directory with `cp -rf path/to/this/ path/to/target` and comment out the relevant mount isolation lines in [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json#L18). Alternatively, execute `docker run -it -v /path/to/project:/home/vscode/workspace/audit devcontainer`  but note that VSCode extensions will not be installed when following this method.
 8. Running `docker ps -a` on your host machine will show all running and stopped/exited containers. Execute `docker stop <container-id>` to stop the container and `docker system prune` to remove all stopped containers.
 
 ## Features Overview
