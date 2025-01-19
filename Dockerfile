@@ -62,7 +62,7 @@ RUN pnpm install hardhat -g
 RUN pipx install crytic-compile && \
     pipx install solc-select && \
     pipx install vyper && \
-    solc-select install && solc-select use latest
+    solc-select install latest && solc-select use latest
 
 ### Install uv, and then the latest version of halmos and moccasin
 RUN curl -fsSL https://astral.sh/uv/install.sh | bash && \
