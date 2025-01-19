@@ -102,6 +102,9 @@ RUN foundryup
 RUN curl -fsSL https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | zsh
 RUN cyfrinup
 
+# Do some things as root
+USER root
+
 # Git clone, compile kind of installations
 ## Install Medusa
 ### Set working directory for Medusa operations
@@ -125,9 +128,6 @@ RUN git clone --depth 1 https://github.com/Cyfrin/audit-repo-cloner.git
 
 # Back to home in case we want to do something later.
 WORKDIR ${HOME}
-
-# Do some things as root
-USER root
 
 ## Add completions for medusa, anvil, cast, forge.
 RUN mkdir -p /usr/share/zsh/site-functions && \
