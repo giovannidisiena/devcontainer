@@ -1,6 +1,6 @@
 {
   // For format details, see https://aka.ms/devcontainer.json.
-  "name": "TRG's DevContainer",
+  "name": "Giovanni Di Siena's DevContainer",
 
   // You can use image or directly use a Dockerfile or Docker Compose file.
   // More info: https://containers.dev/guide/dockerfile
@@ -13,15 +13,14 @@
   "features": {
   },
 
-  // Mount isolation. If you need to extract something from within the container, you can use docker cp, but use it at your own risk. If you want to develop your devcontainer, you should comment this things, otherwise your changes inside the live container won't persist.
+  // Mount isolation. If you need to extract something from within the container, you can use docker cp, but use it at your own risk. Changes inside the live container won't persist.
   // Disables mounting the host workspace into the container.
   "workspaceMount": "source=none,target=/workspace,type=volume",
   // Sets a workspace path entirely isolated within the container
-  "workspaceFolder": "/home/vscode/quests",
+  "workspaceFolder": "/home/vscode/workspace",
   "runArgs": [
     // Read only filesystem except for explicitly writable volumes (check mounts)
-    // For a dev environment this is more a hussle than a feature.
-    // "--read-only",
+    "--read-only",
 
     // Drop all capabilities
     "--cap-drop=ALL",
@@ -39,55 +38,102 @@
     // Play a little bit with resources.
     // "--memory=512m",
     // "--cpus=2"
+
+    // "-e", "GITHUB_TOKEN"
   ],
+  // "remoteEnv": {
+  //   "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+  // },
 
   // Writable mounts in case you want to set --read-only above.
-  // "mounts": [
-  //   "source=tmp-vol,target=/tmp,type=volume",
-  //   "source=home-vscode-vol,target=/home/vscode,type=volume",
-  //   "source=var-vol,target=/var,type=volume",
-  //   "source=run-vol,target=/run,type=volume",
-  //   ],
+  "mounts": [
+    "source=tmp-vol,target=/tmp,type=volume",
+    "source=home-vscode-vol,target=/home/vscode,type=volume",
+    "source=var-vol,target=/var,type=volume",
+    "source=run-vol,target=/run,type=volume",
+    ],
 
 
-// Configure tool-specific properties.
+  // Configure tool-specific properties.
   "customizations": {
-  // Configure properties specific to VS Code.
+    // Configure properties specific to VS Code.
     "vscode": {
       "extensions": [
-        // check out https://marketplace.visualstudio.com/items?itemName=tintinweb.ethereum-security-bundle for more information
-        //   juanblanco.solidity
-        //   tintinweb.solidity-visual-auditor
-        //   tintinweb.solidity-metrics
-        //   tintinweb.vscode-solidity-flattener
-        //   tintinweb.vscode-vyper
-        //   tintinweb.vscode-LLL
-        //   streetsidesoftware.code-spell-checker
-        //   gimenete.github-linker
-        //   ryu1kn.partial-diff
-        //   tintinweb.vscode-inline-bookmarks
-        //   eamodio.gitlens
-        // includes what is listed above ^
-        "tintinweb.ethereum-security-bundle",
-        "tintinweb.vscode-ethover",
-        "trailofbits.weaudit",
-        "tintinweb.vscode-inline-bookmarks", 
-        "tintinweb.vscode-solidity-language",
-        "tintinweb.graphviz-interactive-preview",
+        "GitHub.copilot",
         "NomicFoundation.hardhat-solidity",
-        "Olympixai.olympix",
-        "trailofbits.contract-explorer",
-        // dependency for panoramix
-        "tintinweb.vscode-decompiler"
+        "tintinweb.vscode-inline-bookmarks",
+        "tintinweb.vscode-solidity-language",
+        "tintinweb.vscode-circom-pro",
+        "tintinweb.vscode-vyper",
+        "ms-python.python",
+        "rust-lang.rust-analyzer"
       ],
       "settings": {
+        "github.copilot.enable": {
+          "*": true,
+          "plaintext": true,
+          "markdown": true,
+          "scminput": false
+        },
+        "github.copilot.editor.enableAutoCompletions": true,
+        "editor.codeLens": false,
+        "editor.inlayHints.enabled": "offUnlessPressed",
+        "editor.rulers": [
+          80,
+          120
+        ],
+        "editor.minimap.enabled": false,
+        "files.associations": {
+            "*.circom": "circom"
+        },
         "terminal.integrated.defaultProfile.linux": "zsh",
-        "terminal.integrated.profiles.linux": { "zsh": { "path": "/usr/bin/zsh" } }
+        "terminal.integrated.profiles.linux": { "zsh": { "path": "/usr/bin/zsh" } },
+        "telemetry.telemetryLevel": "off",
+        "gitlens.telemetry.enabled": false,
+        "partialDiff.enableTelemetry": false
+      }
+    },
+    // Configure properties specific to VS Codium.
+    "vscodium": {
+      "extensions": [
+        "GitHub.copilot",
+        "NomicFoundation.hardhat-solidity",
+        "tintinweb.vscode-inline-bookmarks",
+        "tintinweb.vscode-solidity-language",
+        "tintinweb.vscode-circom-pro",
+        "tintinweb.vscode-vyper",
+        "ms-python.python",
+        "rust-lang.rust-analyzer"
+      ],
+      "settings": {
+        "github.copilot.enable": {
+          "*": true,
+          "plaintext": true,
+          "markdown": true,
+          "scminput": false
+        },
+        "github.copilot.editor.enableAutoCompletions": true,
+        "editor.codeLens": false,
+        "editor.inlayHints.enabled": "offUnlessPressed",
+        "editor.rulers": [
+          80,
+          120
+        ],
+        "editor.minimap.enabled": false,
+        "files.associations": {
+            "*.circom": "circom"
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": { "zsh": { "path": "/usr/bin/zsh" } },
+        "telemetry.telemetryLevel": "off",
+        "gitlens.telemetry.enabled": false,
+        "partialDiff.enableTelemetry": false
       }
     }
-  },
-// Use 'postCreateCommand' to run commands after the container is created.
-// "postCreateCommand": ""
-// Use 'postAttachCommand' to attach a command after the container is opened.
+  }
+  
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "echo Welcome to Giovanni Di Siena's dev-container"
+  // Use 'postAttachCommand' to attach a command after the container is opened.
   // "postAttachCommand": "zsh"
 }

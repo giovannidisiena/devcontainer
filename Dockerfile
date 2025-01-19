@@ -29,9 +29,9 @@ RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER vscode
 WORKDIR /home/vscode
 
-# Set HOME and create quests folder
+# Set HOME and create workspace folder
 ENV HOME=/home/vscode
-RUN mkdir -p ${HOME}/quests && chown vscode:vscode ${HOME}/quests
+RUN mkdir -p ${HOME}/workspace && chown vscode:vscode ${HOME}/workspace
 
 # Set neded paths (for python, pix, pnpm)
 ENV USR_LOCAL_BIN=/usr/local/bin
@@ -76,16 +76,18 @@ USER vscode
 RUN pnpm install hardhat -g
 
 # Python installations
-# Install slither (through napalm-core), crytic-compile (through napalm-core), solc (through napalm-core), vyper, mythx, panoramix, slider-lsp (needed for contract explorer), napalm-toolbox
-RUN pipx install napalm-core --include-deps && \ 
-    pipx install vyper && \ 
-    pipx install panoramix-decompiler && \ 
-    pipx install slither-lsp && \ 
-    pipx install mythril && \ 
-    pipx install napalm-toolbox && \ 
+# Install slither-analyzer, crytic-compile, solc-select, vyper, semgrep, and solc
+RUN pipx install slither-analyzer --include-deps && \ 
+    pipx install crytic-compile && \
+    pipx install solc-select && \
+    pipx install vyper && \
     pipx install semgrep && \ 
-    pipx install slitherin && \ 
-    solc-select install 0.4.26 0.5.17 0.6.12 0.7.6 0.8.10 latest && solc-select use latest
+    solc-select install && solc-select use latest
+
+### Install uv, and then the latest version of halmos and moccasin
+RUN curl -fsSL https://astral.sh/uv/install.sh | bash && \
+    uv tool install halmos && \
+    uv tool install moccasin
 
 # Fetch and install setups
 ## ityfuzz
@@ -99,11 +101,6 @@ RUN foundryup
 ## Aderyn
 RUN curl -fsSL https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | zsh
 RUN cyfrinup
-
-## Halmos
-### First installs uv, and then the latest version of halmos and adds it to PATH
-RUN curl -fsSL https://astral.sh/uv/install.sh | bash && \
-    uv tool install halmos
 
 ## Heimdall
 ### Replace 'bifrost' call for 'bifrost -B' so it downloads de binary instead of compiling it.
@@ -129,9 +126,9 @@ RUN rm -rf medusa/
 COPY --chown=vscode:vscode --from=echidna /usr/local/bin/echidna ${HOME}/.local/bin/echidna
 RUN chmod 755 ${HOME}/.local/bin/echidna
 
-# Clone useful repositories inside quests
-WORKDIR ${HOME}/quests
-RUN git clone --depth 1 https://github.com/crytic/building-secure-contracts.git
+# Clone useful repositories inside workspace
+WORKDIR ${HOME}/workspace
+RUN git clone --depth 1 https://github.com/Cyfrin/audit-repo-cloner.git
 
 # Back to home in case we want to do something later.
 WORKDIR ${HOME}
