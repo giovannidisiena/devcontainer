@@ -54,6 +54,7 @@ cd $_
 ### Extensions
 
 - GitHub.copilot
+- vscode-icons-team.vscode-icons
 - NomicFoundation.hardhat-solidity
 - tintinweb.vscode-inline-bookmarks
 - tintinweb.vscode-solidity-language
