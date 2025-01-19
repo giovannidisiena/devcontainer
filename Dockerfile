@@ -1,11 +1,6 @@
 # syntax=docker/dockerfile:1.8
 # check=error=true
 
-## Multi-stage build!
-# Pull latest prebuilt Echidna binary.
-# TODO: "Ensure the base image uses a non latest version tag"
-FROM --platform=linux/amd64 ghcr.io/crytic/echidna/echidna:latest AS echidna
-
 # Grab at least python 3.12
 FROM python:3.12-slim as python-base
 
@@ -45,25 +40,12 @@ RUN python3 -m pip install --no-cache-dir --upgrade pipx
 # Make sure pipx's paths are set
 RUN pipx ensurepath
 
-# Set asdf manager version
-ENV ASDF_VERSION=v0.15.0
-
 # Set the default shell to zsh
 ENV SHELL=/usr/bin/zsh
 
 # Running everything under zsh
 SHELL ["/usr/bin/zsh", "-ic"]
 
-
-# Install golang's latest version through asdf
-RUN git clone https://github.com/asdf-vm/asdf.git $HOME/.asdf --branch ${ASDF_VERSION}  && \
-    echo '. $HOME/.asdf/asdf.sh' >> $HOME/.zshrc && \
-    echo 'fpath=(${ASDF_DIR}/completions $fpath)' >> $HOME/.zshrc && \
-    echo 'autoload -Uz compinit && compinit' >> $HOME/.zshrc && \
-    . $HOME/.asdf/asdf.sh && \
-    asdf plugin add golang && \
-    asdf install golang latest && \
-    asdf global golang latest
 
 ## Install rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env
@@ -77,11 +59,9 @@ RUN pnpm install hardhat -g
 
 # Python installations
 # Install slither-analyzer, crytic-compile, solc-select, vyper, semgrep, and solc
-RUN pipx install slither-analyzer --include-deps && \ 
-    pipx install crytic-compile && \
+RUN pipx install crytic-compile && \
     pipx install solc-select && \
     pipx install vyper && \
-    pipx install semgrep && \ 
     solc-select install && solc-select use latest
 
 ### Install uv, and then the latest version of halmos and moccasin
@@ -90,42 +70,11 @@ RUN curl -fsSL https://astral.sh/uv/install.sh | bash && \
     uv tool install moccasin
 
 # Fetch and install setups
-## ityfuzz
-RUN curl -fsSL https://ity.fuzz.land/ | zsh
-RUN ityfuzzup
-
 ## Foundry framework
 RUN curl -fsSL https://foundry.paradigm.xyz | zsh
 RUN foundryup
 
-## Aderyn
-RUN curl -fsSL https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | zsh
-RUN cyfrinup
-
-## Heimdall
-### Replace 'bifrost' call for 'bifrost -B' so it downloads de binary instead of compiling it.
-### Right now this debian uses a glibc version lower than heimdall needs.
-RUN curl -fsSL https://get.heimdall.rs | zsh && \
-    . ${HOME}/.cargo/env && \
-    ${HOME}/.bifrost/bin/bifrost
-
 # Git clone, compile kind of installations
-## Install Medusa
-### Set working directory for Medusa operations
-WORKDIR ${HOME}/medusa
-RUN git clone https://github.com/crytic/medusa ${HOME}/medusa && \
-    export LATEST_TAG="$(git describe --tags | sed 's/-[0-9]\+-g\w\+$//')" && \
-    git checkout "$LATEST_TAG" && \
-    go build -trimpath -o=${HOME}/.local/bin/medusa -ldflags="-s -w" && \
-    chmod 755 ${HOME}/.local/bin/medusa
-    #### Return to the home directory and clean up
-WORKDIR ${HOME}
-RUN rm -rf medusa/
-
-# Copy prebuilt Echidna binary
-COPY --chown=vscode:vscode --from=echidna /usr/local/bin/echidna ${HOME}/.local/bin/echidna
-RUN chmod 755 ${HOME}/.local/bin/echidna
-
 # Clone useful repositories inside workspace
 WORKDIR ${HOME}/workspace
 RUN git clone --depth 1 https://github.com/Cyfrin/audit-repo-cloner.git
@@ -136,9 +85,8 @@ WORKDIR ${HOME}
 # Do some things as root
 USER root
 
-## Add completions for medusa, anvil, cast, forge.
+## Add completions for anvil, cast, forge.
 RUN mkdir -p /usr/share/zsh/site-functions && \
-    medusa completion zsh > /usr/share/zsh/site-functions/_medusa && \
     for tool in anvil cast forge; do \
         "$tool" completions zsh > /usr/share/zsh/site-functions/_$tool; \
     done
@@ -155,4 +103,4 @@ USER vscode
 
 # Example HEALTHCHECK, we don't need once since we're not using services. If you add services in the future, you would need to add "something" like this:
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 CMD \
-  zsh -c 'command -v echidna && command -v medusa && command -v slither && command -v solc && echo "OK" || exit 1'
+  zsh -c 'command -v solc && echo "OK" || exit 1'

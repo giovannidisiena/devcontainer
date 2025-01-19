@@ -1,5 +1,5 @@
 # Giovanni Di Siena's Dev Container
-Forked from The Red Guild's [Where do you run your code? - an intro to devcontainers](https://blog.theredguild.org/where-do-you-run-your-code/). Additionally inspired by Cyfrin's [Web3 Dev Containers](https://github.com/Cyfrin/web3-dev-containers/tree/main). Always a work in progress.
+Forked from The Red Guild's [Where do you run your code? - an intro to devcontainers](https://blog.theredguild.org/where-do-you-run-your-code/). Additionally inspired by Cyfrin's [Web3 Dev Containers](https://github.com/Cyfrin/web3-dev-containers/tree/main). Always a work in progress. This is the minimized version of the devcontainer.
 
 ## Table of Contents
 - [Requirements](#requirements)
@@ -68,29 +68,13 @@ cd $_
 - **Moccasin**: Smart contract development framework for Vyper.
 
 ### Security Tools
-- **Fuzzing**:
-  - **Medusa**: Parallelized, coverage-guided, mutational Solidity smart contract fuzzing, powered by go-ethereum.
-  - **Echidna**: Fuzz testing for Ethereum contracts (prebuilt binary).
-  - **ityfuzz**: Ethereum fuzzing tool for contract vulnerabilities.
-
-- **Static Analysis**:
-  - **Slither**: Static analysis for Solidity and Vyper.
-    - **Slitherin**: Slither detectors.
-  - **Semgrep**: Lightweight static analysis with custom rule definitions.
-
 - **Symbolic execution**:
   - **Halmos**: A symbolic testing tool for EVM smart contracts.
- 
-- **Other**:
-  - **Heimdall**: An advanced EVM smart contract toolkit specializing in bytecode analysis and
-    extracting information from unverified contracts.
-  - **Aderyn**: Rust-based Solidity AST analyzer.
 
 ### Utilities
 - **solc-select**: Solc version manager for multiple Solidity versions.
 - **vyper**: Pythonic language for Ethereum smart contracts.
 - **Package Managers**:
-  - **asdf**: Multiple runtime version manager.
   - **npm**, **pnpm**, **yarn**: JavaScript package managers.
   - **pipx**: Isolated Python package manager.
   - **cargo**: Rust package manager.
@@ -99,10 +83,10 @@ cd $_
 
 
 ### Languages
-- **JavaScript**, **Python**, **Go**, **Rust**, **Vyper**, **Solidity**.
+- **JavaScript**, **Python**, **Rust**, **Vyper**, **Solidity**.
 
 ### Shell
-**ZSH**. Configured with Oh-My-ZSH and autocompletions for: **medusa**, **anvil**, **cast**, **forge**.
+**ZSH**. Configured with Oh-My-ZSH and autocompletions for: **anvil**, **cast**, **forge**.
 
 ### Additional Repositories
 - **audit-repo-cloner**: Clone repositories for Cyfrin audits.
