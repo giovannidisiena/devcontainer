@@ -1,5 +1,5 @@
 # Giovanni Di Siena's Dev Container
-Forked from The Red Guild's [Where do you run your code? - an intro to devcontainers](https://blog.theredguild.org/where-do-you-run-your-code/). Additionally inspired by Cyfrin's [Web3 Dev Containers](https://github.com/Cyfrin/web3-dev-containers/tree/main). Always a work in progress. This is the minimized version of the devcontainer.
+Based on The Red Guild’s [Where do you run your code? - an intro to devcontainers](https://blog.theredguild.org/where-do-you-run-your-code/). Forked from [theredguild/devcontainer](https://github.com/theredguild/devcontainer). Additionally inspired by Cyfrin’s [Web3 Dev Containers](https://github.com/Cyfrin/web3-dev-containers/tree/main). Always a work in progress.
 
 ## Table of Contents
 - [Requirements](#requirements)
