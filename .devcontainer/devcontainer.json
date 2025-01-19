@@ -51,7 +51,7 @@
     "source=home-vscode-vol,target=/home/vscode,type=volume",
     "source=var-vol,target=/var,type=volume",
     "source=run-vol,target=/run,type=volume",
-    ],
+  ],
 
 
   // Configure tool-specific properties.

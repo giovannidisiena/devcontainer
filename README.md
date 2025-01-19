@@ -76,15 +76,11 @@ cd $_
 - **Static Analysis**:
   - **Slither**: Static analysis for Solidity and Vyper.
     - **Slitherin**: Slither detectors.
+  - **Aderyn**: Rust-based Solidity AST analyzer.
   - **Semgrep**: Lightweight static analysis with custom rule definitions.
 
 - **Symbolic execution**:
   - **Halmos**: A symbolic testing tool for EVM smart contracts.
- 
-- **Other**:
-  - **Heimdall**: An advanced EVM smart contract toolkit specializing in bytecode analysis and
-    extracting information from unverified contracts.
-  - **Aderyn**: Rust-based Solidity AST analyzer.
 
 ### Utilities
 - **solc-select**: Solc version manager for multiple Solidity versions.

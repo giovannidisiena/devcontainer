@@ -82,7 +82,7 @@ RUN pipx install slither-analyzer --include-deps && \
     pipx install solc-select && \
     pipx install vyper && \
     pipx install semgrep && \ 
-    solc-select install && solc-select use latest
+    solc-select install latest && solc-select use latest
 
 ### Install uv, and then the latest version of halmos and moccasin
 RUN curl -fsSL https://astral.sh/uv/install.sh | bash && \
@@ -101,13 +101,6 @@ RUN foundryup
 ## Aderyn
 RUN curl -fsSL https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | zsh
 RUN cyfrinup
-
-## Heimdall
-### Replace 'bifrost' call for 'bifrost -B' so it downloads de binary instead of compiling it.
-### Right now this debian uses a glibc version lower than heimdall needs.
-RUN curl -fsSL https://get.heimdall.rs | zsh && \
-    . ${HOME}/.cargo/env && \
-    ${HOME}/.bifrost/bin/bifrost
 
 # Git clone, compile kind of installations
 ## Install Medusa
