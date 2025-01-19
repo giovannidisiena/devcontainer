@@ -41,13 +41,13 @@ cd $_
 2. Clone this repo and open the directory with vscode/vscodium:
    `code .` or `codium .`.
 3. Run `Dev Containers: Reopen in Container` from the command palette (`Cmd+Shift+P`) to build the container volume. Alternatively, execute `docker build -t devcontainer .`.
-4. If this is your first time, you'll be prompted to press enter on a console
-   log that triggers the terminal.
-5. If not, click the Remote Explorer tab and select the active devcontainer.
+5. Select the active devcontainer from the Remote Explorer tab.
 6. Several features can now be accessed, including:
    - Attaching VS Code/Codium to a running container.
    - Opening new folders or workspaces inside the current volume.
    - Cloning a new repository in a new volume based on the same devcontainer.
+7. To mount an existing directory, execute `docker run -it -v /path/to/project:/home/vscode/workspace/audit devcontainer`.
+8. Running `docker ps -a` on your host machine will show all running and stopped/exited containers. Execute `docker stop <container-id>` to stop the container and `docker system prune` to remove all stopped containers.
 
 ## Features Overview
 
